@@ -122,15 +122,15 @@
                   <div class="form-outline mb-4">
                   
                     <select class="form-control form-control-lg" name="banner_size" required>
-                      <option value="300-250">Medium Rectangle – 300 x 250 (N5,000)</option>
-<option value="336-280">Large Rectangle – 336 x 280  (N5,000)</option>
-<option value="728-90">Leaderboard – 728 x 90  (N5,000)</option>
-<option disabled value="300-600">Half-Page Ad – 300 x 600</option>
-<option disabled value="320-50">Mobile Leaderboard – 320 x 50</option>
-<option disabled value="970-90">Large Leaderboard – 970 x 90</option>
-<option disabled value="160-600">Wide Skyscraper – 160 x 600</option>
-<option disabled value="120-600">Skyscraper – 120 x 600</option>
-<option value="468-60">Banner – 468 x 60 (N5,000)</option>
+                      <option value="Medium Rectangle-300-250">Medium Rectangle – 300 x 250 (N5,000)</option>
+<option value="Large Rectangle-336-280">Large Rectangle – 336 x 280  (N5,000)</option>
+<option value="Leaderboard-728-90">Leaderboard – 728 x 90  (N5,000)</option>
+<option disabled value="Half-Page Ad-300-600">Half-Page Ad – 300 x 600</option>
+<option disabled value="Mobile Leaderboard-320-50">Mobile Leaderboard – 320 x 50</option>
+<option disabled value="Large Leaderboard-970-90">Large Leaderboard – 970 x 90</option>
+<option disabled value="Wide Skyscraper-160-600">Wide Skyscraper – 160 x 600</option>
+<option disabled value="Skyscraper-120-600">Skyscraper – 120 x 600</option>
+<option value="Banner-468-60">Banner – 468 x 60 (N5,000)</option>
                       
                       
                         
@@ -161,7 +161,7 @@
                   </div>
                   <input name="amount" type="hidden" id="hidden_amount" value="5000" />
                   <div class="form-outline mb-4">
-                    <input type="text" id="form3Example97" class="form-control form-control-lg" />
+                    <input type="text" id="form3Example97" name="add_info" class="form-control form-control-lg" placeholder="You can leave it blank" />
                     <label class="form-label" for="form3Example97">Additional Info.</label>
                   </div>
   

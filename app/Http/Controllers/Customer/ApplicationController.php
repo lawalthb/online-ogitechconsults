@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\advertise;
 use Illuminate\Http\Request;
-use App\Http\Requests\AdvertiseRequest;
+
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -12,9 +13,15 @@ use Illuminate\Support\Facades\Hash;
 use Image;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\newlyRegister;
+use Illuminate\Support\Facades\Auth;
 
-class AdvertiseController extends Controller
+class ApplicationController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +29,9 @@ class AdvertiseController extends Controller
      */
     public function index()
     {
-        return view('advertise/applications');
+        $user_id = Auth::user()->id;
+        $advertise = advertise::get()->where('user_id', $user_id);
+        return view('customers.applications', compact(['advertise']));
     }
 
     /**
@@ -44,31 +53,21 @@ class AdvertiseController extends Controller
     public function store(Request $request)
     
     {
+       
         ini_set('max_execution_time', 180);
         $request->validate([  
-            'name'=>'string|max:191|min:3', 'company'=>'required|string|max:191|min:3',
-             'email' =>'required|string|email|unique:users', 'image' =>'required|image|mimes:jpg,jpeg,png,gif,svg|max:3072',
-             'phone' =>'required', 'location' =>'required', 'amount' =>'required'
+            'name'=>'string|max:191|min:3', 
+             'image' =>'required|image|mimes:jpg,jpeg,png,gif,svg|max:3072',
+             'amount' =>'required'
         ]);
-        $newUser =  User::create([
-            'name' => $request->name,
-            'email' =>$request->email,
-            'company' =>$request->company,
-            'phone' =>$request->phone,
-            'website' =>$request->website,
-            'password' => Hash::make($request->phone),
-        ]);
-       
-      
+
         $data = array();
         
-        $data['name'] = 'First Advert';
-        $data['user_id'] = $newUser->id;
+        $data['name'] = $request->name;
+        $data['user_id'] = Auth::user()->id;
        
-        
-        
         $data['amount'] = $request->amount;
-        $data['add_info'] = $request->add_info;
+        $data['add_info'] = '';
         $data['status'] = 1;
         $data['created_at'] = Carbon::now()->toDateTimeString();
 
@@ -87,28 +86,11 @@ class AdvertiseController extends Controller
         $data['banner_size'] = $width.'-'.$hieght;
         $data['image'] =$up_location.$name_gen;
         $advertise_id =DB::table('advertises')->insertGetId($data);
-        // send mail
-        $email = $request->email;
-        $image_link = $up_location.$name_gen;
-        $mailData = [
-        'title' => 'Adv. Email',
-        'url' => 'https://www.runaroundnews.com',
-        'name' => $request->name,
-        'email' => $request->email,
-        'phone' => $request->phone,
-        'image_link' => $image_link,
-        ];
-
-        Mail::to($email)->send(new newlyRegister($mailData));
-        $image_link = $up_location.$name_gen;
-        $company = $request->company;
-        $amount = $request->amount;
-        $name = $request->name;
-        $email = $request->email;
-        $phone = $request->phone;
-        $advertise_id;
-        return view('guest-payment', compact('name', 'phone', 'email', 'image_link','company','amount','advertise_id'))
-        ->with('success');
+        
+        session()->flash('success', 'Banner Added successfully. Click the payment icon to make payment');
+       
+        return \App::call('App\Http\Controllers\Customer\ApplicationController@index');
+       
     }
 
 

@@ -14,7 +14,7 @@
           labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
           type: 'line',
           datasets: [{
-            data: [78, 81, 80, 45, 34, 12, 40],
+            data: [78, 81, 80, 45, 34, 80, 90],
             label: 'Dataset',
             backgroundColor: 'rgba(255,255,255,.1)',
             borderColor: 'rgba(255,255,255,.55)',
@@ -1269,7 +1269,7 @@
       loadingClass: 'page-loader',
       loadingInner: '<div class="page-loader__spin"></div>',
       timeout: false,
-      timeoutCountdown: 5000,
+      timeoutCountdown: 2000,
       onLoadEvent: true,
       browser: ['animation-duration', '-webkit-animation-duration'],
       overlay: false,
